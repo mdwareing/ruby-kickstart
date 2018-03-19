@@ -17,9 +17,19 @@
 
 # remember you can try your program out with              $ ruby 2_input_output_control.rb
 # and when you think it is correct, you can test it with  $ rake 2:2
+def prompt
+  puts "Submit a number!"
+end
 
 def hi_hi_goodbye
-  # your code here
+  prompt
+  while line = gets
+    line.to_i.times { print "hi " }
+    puts 
+    prompt
+    break if line.chomp == "bye"
+  end
+  puts "goodbye"
 end
 
 
