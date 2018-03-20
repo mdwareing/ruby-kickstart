@@ -1,7 +1,6 @@
-# This challenge is based off of problem 1
-# modify it such that it also accepts in the hash, a color (whose values are red("#FF0000"), green("#00FF00"), and blue(#0000FF) )
-# if the color is set, then it should show up in the style
-# It should also not be necessary to pass in the hash, if you don't want to specify options
+# modify it such that it also accepts in the hash, a color
+# if color, then it should show up in style
+# not be necessary to pass in hash, if you don't want to specify options
 #
 #
 # EXAMPLE:
@@ -31,25 +30,33 @@ class HTMLTag
     :monospace  => '"Courier New", "Lucida Console"'
   }
 
-  attr_accessor :name, :innerHTML, :options
+  COLORS = {
+    :red  => '#FF0000',
+    :blue => '#0000FF',
+    :green => '#00FF00'
+  }
+
+  attr_accessor :name, :innerHTML, :font, :color, :multiline
 
   # options: :multiline should be true or false
-  def initialize(name, innerHTML, options)
-    @name, @innerHTML, @options = name, innerHTML, options
+  def initialize(name, innerHTML, options=Hash.new)
+    @name, @innerHTML = name, innerHTML
+    self.font = FONTS[options[:font]],
+    self.color = COLORS[options[:color]]
+    self.multiline = options.fetch :multiline, false
   end
-
-  def font
-    font = options[:font]  #  one of :serif, :sans_serif, or :monospace
-    FONTS[font]
-  end
-
+  
   def style
-    return nil unless options[:font]
-    "style='font-family:#{font}'"
+    return nil unless font || color
+    style_attr = "style='"
+    style_attr << "font-family:#{font};" if font
+    style_attr << "color:#{color};"      if color
+    style_attr << "'"
+    style_attr
   end
 
   def to_s
-    line_end = if options[:multiline] then "\n" else "" end
+    line_end = multiline ? "\n" : ""
     "<#{name} #{style}>#{line_end}"  \
     "#{innerHTML.chomp}#{line_end}"  \
     "</#{name}>\n"

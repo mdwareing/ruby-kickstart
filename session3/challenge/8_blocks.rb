@@ -26,11 +26,14 @@
 
 
 class Person
-  attr_accessor :name
+  attr_accessor :name, :quote, :age
 
-  def initialize(&initializer)
-    @initializer = initializer
-    initializer.call self
+  def initialize(options=Hash.new, &initializer) #think callback function!
+    self.name = options[:name]
+    self.age = options[:age]
+    self.quote = options[:quote]
+    @initializer = (initializer || Proc.new {|person|})
+    reinit
   end
 
   def reinit

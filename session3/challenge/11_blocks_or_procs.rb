@@ -30,5 +30,7 @@
 # end
 
 
-def array_init
+def array_init(n=5, &block)
+  block ||= Proc.new {|x| (x*100).to_s}
+  Array(0...n).map(&block)
 end

@@ -29,4 +29,9 @@
 # shared [1,2,3], [3,2,1]            # => [{1=>[true, true], 2=>[true, true], 3=>[true, true]}, [1, 2, 3]]
 
 def shared(a, b)
+  my_hash = Hash.new
+  a.map{|x| my_hash[x] = [true, nil] }
+  b.map{|y| my_hash[y] ? my_hash[y] = [true, true] : my_hash[y] = [nil, true]}
+
+  return my_hash, my_hash.select{|k,v| v == [true, true]}.map{|k,v| k}.sort
 end

@@ -8,3 +8,13 @@
 # staircase 4  # => {1 => [], 3 => [2]}
 # staircase 5  # => {1 => [], 3 => [2], 5 =>[2, 4]}
 
+def staircase n
+  up_to_odd = Hash.new
+  n.downto(1){|x| up_to_odd[x] = (2..x-1).select{|x| x.even?} if x % 2 != 0}
+  # n.downto 1 do |x|
+  #   if x % 2 != 0 
+  #     up_to_odd[x] = (2..x-1).select{|x| x.even?}
+  #   end
+  # end
+  up_to_odd
+end
