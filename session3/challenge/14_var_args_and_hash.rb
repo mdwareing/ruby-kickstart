@@ -21,11 +21,22 @@
 # problem_14 2,   5, 6, 45, 99, 13, 5, 6,  :problem => :same_ends    # => true
 # problem_14 3,   5, 6, 45, 99, 13, 5, 6,  :problem => :same_ends    # => false
 
-def problem_14
+def problem_14(*args)
+  # no clue, how to do without it being incredibly messy. TODO: Lookup unknown arg number info
 end
 
-def same_ends
+def same_ends(n, *check)
+  check[0, n] == check[-n, n]
 end
 
-def count_clumps
+def count_clumps *n
+  count = 0
+  second_last, last_n = nil
+  
+  n.each do |x|
+    count += 1 if (second_last != last_n) && (last_n == x)
+    second_last = last_n
+    last_n = x
+  end
+  count
 end

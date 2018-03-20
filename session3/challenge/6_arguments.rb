@@ -17,3 +17,6 @@
 # match_maker true,  true,  true, true, nil     # => [false, true]
 # match_maker true,  true,  true, 0, nil        # => [false, true]
 
+def match_maker (state, *elements)
+  elements.each_slice(2).map{|x| state ? !!x[0] != !!x[1]  : !!x[0] == !!x[1] }
+end
